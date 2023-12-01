@@ -3,8 +3,14 @@
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
-
+    <!--Sign Up-->
     <string name="hint_username">Username</string>
     <string name="hint_email">Email</string>
     <string name="hint_password">Password</string>
+    <string name="sign_up_button_text">Sign Up</string>
+    <string name="logo_content_description">This is logo of the app</string>
+    <string name="have_account_text_view">Already have an account?</string>
+    <!--Sign In-->
+    <string name="dont_have_account_text_view">Don\'t have an account?</string>
+    <string name="sign_in_button_text">Sign In</string>
 </resources>
