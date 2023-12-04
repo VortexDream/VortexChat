@@ -1,10 +1,11 @@
 package com.vortex.android.vortexchat.ui.login
 
 import android.util.Log
+import androidx.annotation.StringRes
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.auth.userProfileChangeRequest
+import com.vortex.android.vortexchat.R
 import com.vortex.android.vortexchat.repository.BaseAuthRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
@@ -31,9 +32,12 @@ class LoginViewModel @Inject constructor(
     private val eventsChannel = Channel<AllEvents>()
     val allEventsFlow = eventsChannel.receiveAsFlow()
 
+    init {
+        _firebaseUser.value = repository.getCurrentUser()
+    }
 
     //Проверка валидности
-    fun signInUser(email: String , password: String) = viewModelScope.launch{
+    suspend fun signInUser(email: String , password: String) = viewModelScope.launch{
         when {
             email.isEmpty() -> {
                 eventsChannel.send(AllEvents.ErrorCode(1))
@@ -48,7 +52,7 @@ class LoginViewModel @Inject constructor(
     }
 
     //Проверка валидности
-    fun signUpUser(email : String, password: String, username: String) = viewModelScope.launch {
+    suspend fun signUpUser(email : String, password: String, username: String) = viewModelScope.launch {
         when{
             email.isEmpty() -> {
                 eventsChannel.send(AllEvents.ErrorCode(1))
@@ -67,53 +71,48 @@ class LoginViewModel @Inject constructor(
     }
 
     //Логика входа в аккаунт
-    private fun actualSignInUser(email:String, password: String) = viewModelScope.launch {
+    private suspend fun actualSignInUser(email:String, password: String) = viewModelScope.launch {
         try {
             val user = repository.signInWithEmailPassword(email, password)
             user?.let {
                 _firebaseUser.value = it
-                eventsChannel.send(AllEvents.Message("login success"))
+                eventsChannel.send(AllEvents.Message(R.string.login_success_message))
             }
-        } catch(e:Exception){
+        } catch(e:Exception) {
             val error = e.toString().split(":").toTypedArray()
             Log.d(TAG, "signInUser: ${error[1]}")
-            eventsChannel.send(AllEvents.Error(error[1]))
+            eventsChannel.send(AllEvents.Error(R.string.error_signin))
         }
     }
 
     //Логика регистрации аккаунта
-    private fun actualSignUpUser(email:String , password: String, username: String) = viewModelScope.launch {
+    private suspend fun actualSignUpUser(email:String , password: String, username: String) = viewModelScope.launch {
         try {
-            var user = repository.signUpWithEmailPassword(email, password)
-            val profileUpdates = userProfileChangeRequest {
-                displayName = username
-            }
-            user?.updateProfile(profileUpdates)
-            user = repository.getCurrentUser()
+            val user = repository.signUpWithEmailPassword(email, password, username)
             user?.let {
                 _firebaseUser.value = it
-                eventsChannel.send(AllEvents.Message("sign up success"))
+                eventsChannel.send(AllEvents.Message(R.string.sign_up_success_message))
             }
-        } catch(e:Exception){
+        } catch(e:Exception) {
             val error = e.toString().split(":").toTypedArray()
             Log.d(TAG, "signInUser: ${error[1]}")
-            eventsChannel.send(AllEvents.Error(error[1]))
+            eventsChannel.send(AllEvents.Error(R.string.error_signup))
         }
     }
 
-    fun signOut() = viewModelScope.launch {
+    suspend fun signOut() = viewModelScope.launch {
         try {
             val user = repository.signOut()
             user?.let {
-                eventsChannel.send(AllEvents.Message("logout failure"))
-            }?: eventsChannel.send(AllEvents.Message("sign out successful"))
+                eventsChannel.send(AllEvents.Message(R.string.error_signout))
+            }?: eventsChannel.send(AllEvents.Message(R.string.sign_out_success_message))
 
             getCurrentUser()
 
-        } catch(e:Exception){
+        } catch(e:Exception) {
             val error = e.toString().split(":").toTypedArray()
             Log.d(TAG, "signInUser: ${error[1]}")
-            eventsChannel.send(AllEvents.Error(error[1]))
+            eventsChannel.send(AllEvents.Error(R.string.error_signout))
         }
     }
 
@@ -122,7 +121,7 @@ class LoginViewModel @Inject constructor(
         _firebaseUser.value = user
     }
 
-    fun verifySendPasswordReset(email: String){
+    suspend fun verifySendPasswordReset(email: String){
         if(email.isEmpty()){
             viewModelScope.launch {
                 eventsChannel.send(AllEvents.ErrorCode(1))
@@ -133,24 +132,25 @@ class LoginViewModel @Inject constructor(
 
     }
 
-    private fun sendPasswordResetEmail(email: String) = viewModelScope.launch {
+    private suspend fun sendPasswordResetEmail(email: String) = viewModelScope.launch {
         try {
             val result = repository.sendResetPassword(email)
             if (result){
-                eventsChannel.send(AllEvents.Message("reset email sent"))
-            }else{
-                eventsChannel.send(AllEvents.Error("could not send password reset"))
+                eventsChannel.send(AllEvents.Message(R.string.reset_password_success_message))
+            } else {
+                eventsChannel.send(AllEvents.Error(R.string.error_reset_password))
             }
-        }catch (e : Exception){
+        } catch (e : Exception){
             val error = e.toString().split(":").toTypedArray()
             Log.d(TAG, "signInUser: ${error[1]}")
-            eventsChannel.send(AllEvents.Error(error[1]))
+            eventsChannel.send(AllEvents.Error(R.string.error_reset_password))
         }
     }
 
     sealed class AllEvents {
-        data class Message(val message : String) : AllEvents()
+        //Viewmodel не должна работать со строками
+        data class Message(@StringRes val messageRes : Int) : AllEvents()
         data class ErrorCode(val code : Int): AllEvents()
-        data class Error(val error : String) : AllEvents()
+        data class Error(@StringRes val errorRes : Int) : AllEvents()
     }
 }

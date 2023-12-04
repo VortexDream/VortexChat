@@ -1,21 +1,22 @@
 package com.vortex.android.vortexchat.ui.login.sign_in
 
-import android.content.Intent
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import android.view.inputmethod.InputMethodManager
 import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.snackbar.Snackbar
+import com.vortex.android.vortexchat.R
 import com.vortex.android.vortexchat.activities.MainActivity
 import com.vortex.android.vortexchat.databinding.FragmentSignInBinding
 import com.vortex.android.vortexchat.ui.login.LoginViewModel
@@ -37,6 +38,8 @@ class SignInFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        (activity as MainActivity).hideBottomNavigation()
+        (activity as MainActivity).supportActionBar?.hide()
         _binding = FragmentSignInBinding.inflate(layoutInflater, container,false)
         return binding.root
     }
@@ -51,7 +54,17 @@ class SignInFragment : Fragment() {
                 progressBar.isVisible = true
                 val email = emailField.text.toString()
                 val password = passwordField.text.toString()
-                loginViewModel.signInUser(email, password)
+                viewLifecycleOwner.lifecycleScope.launch {
+                    loginViewModel.signInUser(email, password)
+                }
+                requireActivity().currentFocus?.let { view ->
+                    val imm = requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
+                    imm?.hideSoftInputFromWindow(view.windowToken, 0)
+                }
+            }
+
+            resetPasswordButton.setOnClickListener {
+                findNavController().navigate(SignInFragmentDirections.resetPassword())
             }
 
             haveAccountButton.setOnClickListener {
@@ -66,8 +79,9 @@ class SignInFragment : Fragment() {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 loginViewModel.currentUser.collect { user ->
                     user?.let {
-                        val intent = Intent(requireContext(), MainActivity::class.java)
-                        startActivity(intent)
+                        Log.d(TAG, "HOMESCREEN")
+                        Log.d(TAG, "$user, ${user.displayName.toString()}")
+                        findNavController().navigate(SignInFragmentDirections.signInToHome())
                     }
                 }
             }
@@ -80,33 +94,38 @@ class SignInFragment : Fragment() {
             loginViewModel.allEventsFlow.collect { event ->
                 when(event){
                     is LoginViewModel.AllEvents.Error -> {
-                        binding.apply {
-                            errorTxt.text =  event.error
-                            progressBar.isInvisible = true
-                        }
+                        binding.progressBar.isInvisible = true
+                        Snackbar.make(binding.root, getString(event.errorRes), Snackbar.LENGTH_SHORT)
+                            .show()
                     }
                     is LoginViewModel.AllEvents.Message -> {
-                        Toast.makeText(requireContext(), event.message, Toast.LENGTH_SHORT).show()
+                        Snackbar.make(binding.root, getString(event.messageRes), Snackbar.LENGTH_SHORT)
+                            .show()
                     }
                     is LoginViewModel.AllEvents.ErrorCode -> {
-                        if (event.code == 1)
-                            binding.apply {
-                                emailField.error = "email should not be empty"
-                                progressBar.isInvisible = true
-                            }
+                        if (event.code == 1) {
+                            binding.progressBar.isInvisible = true
+                            Snackbar.make(binding.root, getString(R.string.error_empty_email), Snackbar.LENGTH_SHORT)
+                                .show()
+                        }
 
-
-                        if(event.code == 2)
-                            binding.apply {
-                                passwordField.error = "password should not be empty"
-                                progressBar.isInvisible = true
-                            }
+                        if (event.code == 2) {
+                            binding.progressBar.isInvisible = true
+                            Snackbar.make(binding.root, getString(R.string.error_empty_password), Snackbar.LENGTH_SHORT)
+                                .show()
+                        }
                     }
                 }
-
             }
         }
     }
+
+    //Закомментировано из-за мерцания
+    /*override fun onStop() {
+        super.onStop()
+        (activity as MainActivity).showBottomNavigation()
+        (activity as MainActivity).supportActionBar?.show()
+    }*/
 
     override fun onDestroy() {
         super.onDestroy()

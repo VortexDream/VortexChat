@@ -71,32 +71,37 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/email_field" />
 
+
+
     <TextView
         android:id="@+id/have_account_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:padding="4dp"
         android:text="@string/have_account_text_view"
         android:textColor="@color/yellow"
+        android:textSize="14sp"
+        app:layout_constraintVertical_bias="0.9"
         android:textStyle="bold"
-        android:textSize="11sp"
-        app:layout_constraintEnd_toEndOf="@+id/password_field"
-        app:layout_constraintTop_toBottomOf="@+id/password_field"
-        android:padding="4dp"/>
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/password_field" />
 
     <Button
         android:id="@+id/sign_up_button"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
+        android:backgroundTint="@color/colorPrimary"
         android:text="@string/sign_up_button_text"
+        android:textAllCaps="false"
         android:textColor="@color/yellow"
         app:cornerRadius="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/have_account_button"
+        app:layout_constraintTop_toBottomOf="@+id/password_field"
         app:strokeColor="@color/yellow"
-        app:strokeWidth="2dp"
-        android:textAllCaps="false"
-        android:backgroundTint="@color/colorPrimary"/>
+        app:strokeWidth="2dp" />
 
     <ProgressBar
         android:id="@+id/progressBar"
@@ -109,19 +114,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/error_txt"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="24dp"
-        android:textAlignment="center"
-        android:textColor="#E53935"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sign_up_button" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

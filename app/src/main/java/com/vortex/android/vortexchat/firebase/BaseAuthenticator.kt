@@ -6,7 +6,7 @@ import com.google.firebase.auth.FirebaseUser
 //для имплементации разных видов регистрациии входа
 interface BaseAuthenticator {
 
-    suspend fun signUpWithEmailPassword(email:String , password:String) : FirebaseUser?
+    suspend fun signUpWithEmailPassword(email:String , password:String, username: String) : FirebaseUser?
 
     suspend fun signInWithEmailPassword(email: String , password: String): FirebaseUser?
 

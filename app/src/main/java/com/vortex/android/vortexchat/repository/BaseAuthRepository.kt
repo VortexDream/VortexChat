@@ -14,7 +14,7 @@ interface BaseAuthRepository {
 
     suspend fun signInWithEmailPassword(email:String , password:String): FirebaseUser?
 
-    suspend fun signUpWithEmailPassword(email: String , password: String): FirebaseUser?
+    suspend fun signUpWithEmailPassword(email: String , password: String, username: String): FirebaseUser?
 
     fun signOut() : FirebaseUser?
 

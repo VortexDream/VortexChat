@@ -13,4 +13,29 @@
     <!--Sign In-->
     <string name="dont_have_account_text_view">Don\'t have an account?</string>
     <string name="sign_in_button_text">Sign In</string>
+    <!--Errors and messages-->
+    <string name="login_success_message">Login success</string>
+    <string name="error_signup">Sign up error</string>
+    <string name="error_signin">Sign in error</string>
+    <string name="error_signout">Sign out error</string>
+    <string name="error_reset_password">Password reset error</string>
+    <string name="sign_up_success_message">Sign up success</string>
+    <string name="sign_out_success_message">Sign out success</string>
+    <string name="reset_password_success_message">Reset email sent</string>
+    <string name="error_empty_email">Email should not be empty</string>
+    <string name="error_empty_password">Password should not be empty</string>
+    <!-- Strings related to login -->
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="welcome">"Welcome!"</string>
+    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="login_failed">"Login failed"</string>
+
+    <string name="reset_password_button">Forgot password?</string>
+    <string name="return_button">Back</string>
+    <string name="enter_reset_password_email">Enter your user account\'s email address and we will send you a password reset link.</string>
+    <string name="reset_password_button_send_email">Reset password</string>
 </resources>

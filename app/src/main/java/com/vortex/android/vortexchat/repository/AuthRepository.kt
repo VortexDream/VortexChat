@@ -11,8 +11,8 @@ class AuthRepository @Inject constructor(
         return authenticator.signInWithEmailPassword(email , password)
     }
 
-    override suspend fun signUpWithEmailPassword(email: String, password: String): FirebaseUser? {
-        return authenticator.signUpWithEmailPassword(email , password)
+    override suspend fun signUpWithEmailPassword(email: String, password: String, username: String): FirebaseUser? {
+        return authenticator.signUpWithEmailPassword(email , password, username)
     }
 
     override fun signOut(): FirebaseUser? {
