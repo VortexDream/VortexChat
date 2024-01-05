@@ -1,7 +1,10 @@
 package com.vortex.android.vortexchat.di
 
+import com.google.firebase.database.FirebaseDatabase
 import com.vortex.android.vortexchat.firebase.BaseAuthenticator
+import com.vortex.android.vortexchat.firebase.BaseDatabase
 import com.vortex.android.vortexchat.firebase.FirebaseAuthenticator
+import com.vortex.android.vortexchat.firebase.OnlineDatabase
 import com.vortex.android.vortexchat.repository.AuthRepository
 import com.vortex.android.vortexchat.repository.BaseAuthRepository
 import dagger.Module
@@ -14,22 +17,27 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object AppModule {
 
-    /**All of our application dependencies shall be provided here*/
-
-    //this means that anytime we need an authenticator Dagger will provide a Firebase authenticator.
-    //in future if you want to swap out Firebase authentication for your own custom authenticator
-    //you will simply come and swap here.
     @Singleton
     @Provides
-    fun provideAuthenticator() : BaseAuthenticator {
-        return FirebaseAuthenticator()
+    fun provideAuthenticator(database : FirebaseDatabase) : BaseAuthenticator {
+        return FirebaseAuthenticator(database)
     }
 
-    //this just takes the same idea as the authenticator. If we create another repository class
-    //we can simply just swap here
     @Singleton
     @Provides
     fun provideRepository(authenticator : BaseAuthenticator) : BaseAuthRepository {
         return AuthRepository(authenticator)
+    }
+
+    @Singleton
+    @Provides
+    fun provideFirebaseDatabase() : FirebaseDatabase {
+        return FirebaseDatabase.getInstance()
+    }
+
+    @Singleton
+    @Provides
+    fun provideDatabase(firebaseDatabase : FirebaseDatabase, repository: BaseAuthRepository) : BaseDatabase {
+        return OnlineDatabase(firebaseDatabase, repository)
     }
 }

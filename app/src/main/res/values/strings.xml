@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">Vortex Chat</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="title_home">Chats</string>
+    <string name="title_dashboard">Calls</string>
+    <string name="title_notifications">Profile</string>
     <!--Sign Up-->
     <string name="hint_username">Username</string>
     <string name="hint_email">Email</string>
@@ -38,4 +38,11 @@
     <string name="return_button">Back</string>
     <string name="enter_reset_password_email">Enter your user account\'s email address and we will send you a password reset link.</string>
     <string name="reset_password_button_send_email">Reset password</string>
+
+    <string name="profile_photo_no_image_description">Profile picture (not set)</string>
+    <string name="profile_photo_image_description">Profile picture (set)</string>
+    <string name="chat_list_display_name">Username</string>
+    <string name="chat_list_last_message">Last message</string>
+
+    <string name="sign_out_button">Sign Out</string>
 </resources>

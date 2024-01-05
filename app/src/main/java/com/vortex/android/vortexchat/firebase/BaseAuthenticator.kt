@@ -1,6 +1,7 @@
 package com.vortex.android.vortexchat.firebase
 
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.database.FirebaseDatabase
 
 //Базовый аутентификатор, от которого наследуют другие классы
 //для имплементации разных видов регистрациии входа

@@ -100,7 +100,7 @@ class LoginViewModel @Inject constructor(
         }
     }
 
-    suspend fun signOut() = viewModelScope.launch {
+    /*fun signOut() = viewModelScope.launch {
         try {
             val user = repository.signOut()
             user?.let {
@@ -111,10 +111,10 @@ class LoginViewModel @Inject constructor(
 
         } catch(e:Exception) {
             val error = e.toString().split(":").toTypedArray()
-            Log.d(TAG, "signInUser: ${error[1]}")
+            Log.d(TAG, "signOutUser: ${error[1]}")
             eventsChannel.send(AllEvents.Error(R.string.error_signout))
         }
-    }
+    }*/
 
     fun getCurrentUser() = viewModelScope.launch {
         val user = repository.getCurrentUser()
