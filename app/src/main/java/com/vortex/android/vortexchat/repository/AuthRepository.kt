@@ -7,6 +7,9 @@ import javax.inject.Inject
 class AuthRepository @Inject constructor(
     private val authenticator : BaseAuthenticator
 ) : BaseAuthRepository {
+
+    private var currentUser : FirebaseUser? = null
+
     override suspend fun signInWithEmailPassword(email: String, password: String): FirebaseUser? {
         return authenticator.signInWithEmailPassword(email , password)
     }
@@ -16,11 +19,17 @@ class AuthRepository @Inject constructor(
     }
 
     override fun signOut(): FirebaseUser? {
-        return authenticator.signOut()
+        currentUser = authenticator.signOut()
+        return currentUser
     }
 
     override fun getCurrentUser(): FirebaseUser? {
-        return authenticator.getUser()
+        return if (currentUser != null) {
+            currentUser
+        } else {
+            currentUser = authenticator.getUser()
+            currentUser
+        }
     }
 
     override suspend fun sendResetPassword(email: String): Boolean {

@@ -17,13 +17,16 @@
         <action
             android:id="@+id/chats_to_login"
             app:destination="@id/signUpFragment" />
+        <action
+            android:id="@+id/chatlist_to_dialog"
+            app:destination="@id/dialogFragment" />
     </fragment>
 
     <fragment
         android:id="@+id/navigation_global_chat"
-        android:name="com.vortex.android.vortexchat.ui.dashboard.DashboardFragment"
-        android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard"
+        android:name="com.vortex.android.vortexchat.ui.global_chat.GlobalChatFragment"
+        android:label="@string/title_global_chat"
+        tools:layout="@layout/fragment_global_chat"
         app:enterAnim="@anim/slide_in_right"
         app:exitAnim="@anim/slide_out_left"
         app:popEnterAnim="@android:anim/slide_in_left"
@@ -36,7 +39,7 @@
     <fragment
         android:id="@+id/navigation_profile"
         android:name="com.vortex.android.vortexchat.ui.profile.ProfileFragment"
-        android:label="@string/title_notifications"
+        android:label="@string/title_profile"
         tools:layout="@layout/fragment_profile"
         app:enterAnim="@anim/slide_in_right"
         app:exitAnim="@anim/slide_out_left"
@@ -99,4 +102,9 @@
         android:name="com.vortex.android.vortexchat.ui.login.reset_password.ResetPasswordFragment"
         android:label="ResetPasswordFragment"
         tools:layout="@layout/fragment_reset_password" />
+    <fragment
+        android:id="@+id/dialogFragment"
+        android:name="com.vortex.android.vortexchat.ui.dialog.DialogFragment"
+        android:label="fragment_dialog"
+        tools:layout="@layout/fragment_dialog" />
 </navigation>

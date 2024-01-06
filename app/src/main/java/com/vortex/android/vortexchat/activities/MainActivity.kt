@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
+import androidx.navigation.findNavController
+import androidx.navigation.ui.navigateUp
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
@@ -30,7 +32,7 @@ class MainActivity : AppCompatActivity() {
         val navController: NavController = navHostFragment.navController
         val appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.navigation_chats, R.id.navigation_calls, R.id.navigation_profile
+                R.id.navigation_chats, R.id.navigation_global_chat, R.id.navigation_profile
             )
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
@@ -47,5 +49,13 @@ class MainActivity : AppCompatActivity() {
     fun hideBottomNavigation()
     {
         binding.navView.visibility = View.GONE
+    }
+
+    //Без этого кнопка назад не работает
+    override fun onSupportNavigateUp(): Boolean {
+        val navController = findNavController(R.id.nav_host_fragment_activity_main)
+        val appBarConfiguration = AppBarConfiguration(navController.graph)
+        return navController.navigateUp(appBarConfiguration)
+                || super.onSupportNavigateUp()
     }
 }

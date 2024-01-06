@@ -5,6 +5,7 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.vortex.android.vortexchat.model.Message
 import com.vortex.android.vortexchat.model.User
 import com.vortex.android.vortexchat.repository.BaseAuthRepository
 import kotlinx.coroutines.Dispatchers
@@ -25,6 +26,10 @@ class OnlineDatabase @Inject constructor(
     private val _userList = MutableStateFlow<List<User>>(emptyList())
     val userList : StateFlow<List<User>>
         get() = _userList.asStateFlow()
+
+    private val _globalChatMessageList = MutableStateFlow<List<Message>>(emptyList())
+    val globalChatMessageList : StateFlow<List<Message>>
+        get() = _globalChatMessageList.asStateFlow()
 
     val currentUserId = repository.getCurrentUser()!!.uid
 
@@ -55,5 +60,35 @@ class OnlineDatabase @Inject constructor(
                 _userList.value = emptyList()
             }
         })
+    }
+
+    override suspend fun getAllGlobalChatMessages() {
+        val globalChatMessagesRef = firebaseDatabase.getReference("GlobalChatMessages")
+        globalChatMessagesRef.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+
+                val messages = mutableListOf<Message>()
+                for (messageSnapshot in dataSnapshot.children) {
+
+                    val senderUserId = messageSnapshot.child("senderUserId").getValue(String::class.java)!!
+                    val text = messageSnapshot.child("text").getValue(String::class.java)!!
+                    val timestamp = messageSnapshot.child("timestamp").getValue(Long::class.java)!!
+
+                    val message = Message(senderUserId, text, timestamp)
+                    messages.add(message)
+                }
+
+                _globalChatMessageList.value = messages
+            }
+
+            override fun onCancelled(databaseError: DatabaseError) {
+                // Обработка ошибок при чтении данных
+                _globalChatMessageList.value = emptyList()
+            }
+        })
+    }
+
+    override suspend fun sendMessageToGlobalChat(message: Message) {
+        firebaseDatabase.reference.child("GlobalChatMessages").push().setValue(message)
     }
 }

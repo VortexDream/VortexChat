@@ -1,4 +1,4 @@
-package com.vortex.android.vortexchat.ui.chats
+package com.vortex.android.vortexchat.ui.global_chat
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -12,21 +12,22 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.vortex.android.vortexchat.activities.MainActivity
-import com.vortex.android.vortexchat.databinding.FragmentChatsBinding
+import com.vortex.android.vortexchat.databinding.FragmentGlobalChatBinding
+import com.vortex.android.vortexchat.ui.chats.ChatsFragmentDirections
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class ChatsFragment : Fragment() {
+class GlobalChatFragment : Fragment() {
 
-    private var _binding: FragmentChatsBinding? = null
+    private var _binding: FragmentGlobalChatBinding? = null
     private val binding
         get() = checkNotNull(_binding) {
             "Cannot access binding because it is null. Is the view visible?"
         }
 
-    private val chatsViewModel: ChatsViewModel by viewModels()
-    private val TAG = "ChatsFragment"
+    private val globalChatViewModel: GlobalChatViewModel by viewModels()
+    private val TAG = "DialogFragment"
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -36,8 +37,8 @@ class ChatsFragment : Fragment() {
 
         (activity as MainActivity).showBottomNavigation()
         (activity as MainActivity).supportActionBar?.show()
-        _binding = FragmentChatsBinding.inflate(layoutInflater, container,false)
-        binding.chatsRecyclerView.layoutManager = LinearLayoutManager(context)
+        _binding = FragmentGlobalChatBinding.inflate(layoutInflater, container,false)
+        binding.globalChatRecyclerView.layoutManager = LinearLayoutManager(context)
 
         return binding.root
     }
@@ -45,15 +46,21 @@ class ChatsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        chatsViewModel.getCurrentUser()
-        registerObservers()
+        globalChatViewModel.getCurrentUser()
+        binding.apply {
+            sendButton.setOnClickListener {
+                val messageField = binding.messageTextField.editText
+                if (messageField!!.text.toString() != "") {
+                    globalChatViewModel.sendMessage(messageField.text.toString())
+                    messageField.text.clear()
+                }
+            }
+        }
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                chatsViewModel.userList.collect { users ->
-                    binding.chatsRecyclerView.adapter = ChatListAdapter(users, requireContext()) { userId ->
-                        findNavController().navigate(ChatsFragmentDirections.chatlistToDialog())
-                    }
+                globalChatViewModel.globalChatMessageList.collect { messages ->
+                    binding.globalChatRecyclerView.adapter = GlobalChatListAdapter(messages, requireContext())
                 }
             }
         }
@@ -64,15 +71,4 @@ class ChatsFragment : Fragment() {
         _binding = null
     }
 
-    private fun registerObservers() {
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                chatsViewModel.currentUser.collect { user ->
-                    if (user == null) {
-                        findNavController().navigate(ChatsFragmentDirections.chatsToLogin())
-                    }
-                }
-            }
-        }
-    }
 }

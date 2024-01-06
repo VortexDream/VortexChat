@@ -17,21 +17,10 @@ class ChatHolder(
     fun bind(user: User, onChatClicked: (userId: String?) -> Unit) {
 
         binding.username.text = user.username
-        /*binding.root.contentDescription = if (crime.isSolved) {
-            context.getString(R.string.crime_item_description, crime.title)
-        } else {
-            context.getString(R.string.crime_item_description_not_solved, crime.title)
-        }*/
 
         binding.root.setOnClickListener {
             onChatClicked(user.userId)
         }
-
-        /*binding.crimeSolved.visibility = if (crime.isSolved) {
-            View.VISIBLE
-        } else {
-            View.GONE
-        }*/
     }
 }
 
