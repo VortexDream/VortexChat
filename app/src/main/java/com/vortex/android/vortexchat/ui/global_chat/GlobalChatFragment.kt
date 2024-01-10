@@ -11,11 +11,13 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.firebase.storage.FirebaseStorage
 import com.vortex.android.vortexchat.activities.MainActivity
 import com.vortex.android.vortexchat.databinding.FragmentGlobalChatBinding
 import com.vortex.android.vortexchat.ui.chats.ChatsFragmentDirections
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class GlobalChatFragment : Fragment() {
@@ -27,7 +29,10 @@ class GlobalChatFragment : Fragment() {
         }
 
     private val globalChatViewModel: GlobalChatViewModel by viewModels()
-    private val TAG = "DialogFragment"
+    private val TAG = "GlobalChatFragment"
+
+    @Inject
+    lateinit var storage: FirebaseStorage
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -39,6 +44,8 @@ class GlobalChatFragment : Fragment() {
         (activity as MainActivity).supportActionBar?.show()
         _binding = FragmentGlobalChatBinding.inflate(layoutInflater, container,false)
         binding.globalChatRecyclerView.layoutManager = LinearLayoutManager(context)
+            .apply { stackFromEnd = true }
+
 
         return binding.root
     }
@@ -60,7 +67,12 @@ class GlobalChatFragment : Fragment() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 globalChatViewModel.globalChatMessageList.collect { messages ->
-                    binding.globalChatRecyclerView.adapter = GlobalChatListAdapter(messages, requireContext())
+                    binding.globalChatRecyclerView.adapter = GlobalChatListAdapter(
+                        messages,
+                        requireContext(),
+                        globalChatViewModel.currentUser.value?.uid,
+                        storage
+                    )
                 }
             }
         }

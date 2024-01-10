@@ -2,7 +2,7 @@ package com.vortex.android.vortexchat.model
 
 import com.google.firebase.database.ServerValue
 
-class Message(
+data class Message(
     val senderUserId: String,
     val text: String,
     val timestamp: Any

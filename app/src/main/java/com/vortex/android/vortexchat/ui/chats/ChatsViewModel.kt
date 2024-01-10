@@ -5,15 +5,15 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.FirebaseUser
 import com.vortex.android.vortexchat.firebase.OnlineDatabase
+import com.vortex.android.vortexchat.model.LastMessage
+import com.vortex.android.vortexchat.model.Message
 import com.vortex.android.vortexchat.model.User
 import com.vortex.android.vortexchat.repository.BaseAuthRepository
-import com.vortex.android.vortexchat.ui.login.LoginViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.receiveAsFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -33,12 +33,22 @@ class ChatsViewModel @Inject constructor(
     val currentUser : StateFlow<FirebaseUser?>
         get() = _firebaseUser.asStateFlow()
 
+    private val _lastDialogMessageList = MutableStateFlow<List<LastMessage>>(emptyList())
+    val lastDialogMessageList : StateFlow<List<LastMessage>>
+        get() = _lastDialogMessageList.asStateFlow()
+
     init {
         _firebaseUser.value = repository.getCurrentUser()
         viewModelScope.launch {
             database.getAllUsers()
             database.userList.collect {
                 _userList.value = it
+            }
+        }
+        viewModelScope.launch {
+            database.getLastDialogMessages()
+            database.lastDialogMessageList.collect {
+                _lastDialogMessageList.value = it
             }
         }
     }

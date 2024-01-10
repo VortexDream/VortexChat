@@ -1,5 +1,6 @@
 package com.vortex.android.vortexchat.ui.profile
 
+import android.net.Uri
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -7,6 +8,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.FirebaseUser
 import com.vortex.android.vortexchat.R
+import com.vortex.android.vortexchat.firebase.BaseStorage
 import com.vortex.android.vortexchat.firebase.OnlineDatabase
 import com.vortex.android.vortexchat.model.User
 import com.vortex.android.vortexchat.repository.BaseAuthRepository
@@ -22,7 +24,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ProfileViewModel @Inject constructor(
-    private val repository: BaseAuthRepository
+    private val repository: BaseAuthRepository,
+    private val storage: BaseStorage
 ) : ViewModel() {
 
     private val TAG = "ProfileViewModel"
@@ -48,5 +51,9 @@ class ProfileViewModel @Inject constructor(
     fun getCurrentUser() = viewModelScope.launch {
         val user = repository.getCurrentUser()
         _firebaseUser.value = user
+    }
+
+    fun uploadProfilePic(uri: Uri, toastCallback: () -> Unit, imageViewCallback: () -> Unit) = viewModelScope.launch {
+        storage.uploadProfilePic(uri, toastCallback, imageViewCallback)
     }
 }

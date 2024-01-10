@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/dialog_fragment"
-    tools:context=".ui.dialog.DialogFragment">
+    tools:context=".ui.dialog.DialogFragment"
+    android:layout_marginBottom="10dp">
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
@@ -34,7 +36,7 @@
             android:layout_height="40dp"
             android:paddingTop="4dp"
             android:paddingBottom="4dp"
-            android:textColor="@color/colorPrimary"/>
+            android:textColor="@color/white"/>
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -44,8 +46,6 @@
         android:layout_height="wrap_content"
         android:backgroundTint="@color/colorPrimary"
         android:src="@drawable/ic_send"
-        android:textAllCaps="false"
-        android:textColor="@color/yellow"
         app:cornerRadius="8dp"
         app:layout_constraintBottom_toBottomOf="@+id/messageTextField"
         app:layout_constraintEnd_toEndOf="parent"

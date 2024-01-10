@@ -1,0 +1,56 @@
+<resources>
+    <string name="app_name">VortexChat</string>
+    <string name="title_home">Диалоги</string>
+    <string name="title_global_chat">Общий чат</string>
+    <string name="title_profile">Профиль</string>
+    <!--Sign Up-->
+    <string name="hint_username">Имя</string>
+    <string name="hint_email">Почта</string>
+    <string name="hint_password">Пароль</string>
+    <string name="sign_up_button_text">Зарегистрироваться</string>
+    <string name="logo_content_description">Это иконка приложения</string>
+    <string name="have_account_text_view">Уже есть аккаунт?</string>
+    <!--Sign In-->
+    <string name="dont_have_account_text_view">Нет аккаунта?</string>
+    <string name="sign_in_button_text">Войти</string>
+    <!--Errors and messages-->
+    <string name="login_success_message">Вход прошёл успешно</string>
+    <string name="error_signup">Ошибка регистрации</string>
+    <string name="error_signin">Ошибка входа</string>
+    <string name="error_signout">Ошибка выхода из аккаунта</string>
+    <string name="error_reset_password">Ошибка сброса пароля</string>
+    <string name="sign_up_success_message">Регистрация прошла успешно</string>
+    <string name="sign_out_success_message">Выход из аккаунта прошёл успешно</string>
+    <string name="reset_password_success_message">Письмо для сброса пароля было отправлено на электронную почту</string>
+    <string name="error_empty_email">Поле с электронной почтой не должно быть пустым</string>
+    <string name="error_empty_password">Поле с паролем не должно быть пустым</string>
+    <!-- Strings related to login -->
+    <string name="prompt_email">Почта</string>
+    <string name="prompt_password">Пароль</string>
+    <string name="action_sign_in">Вход или регистрация</string>
+    <string name="action_sign_in_short">Вход</string>
+    <string name="welcome">Добро пожаловать!</string>
+    <string name="invalid_username">Некорректное имя</string>
+    <string name="invalid_password">Пароль должен иметь более 5 символов</string>
+    <string name="login_failed">Ошибка входа</string>
+
+    <string name="reset_password_button">Забыли пароль?</string>
+    <string name="return_button">Назад</string>
+    <string name="enter_reset_password_email">Введите адрес электронной почты вашего аккаунта, и на него будет выслано письмо с инструкциями по сбросу пароля</string>
+    <string name="reset_password_button_send_email">Сбросить пароль</string>
+
+    <string name="profile_photo_no_image_description">Фото профиля (не установлено)</string>
+    <string name="profile_photo_image_description">Фото профиля</string>
+    <string name="chat_list_display_name">Имя</string>
+    <string name="chat_list_last_message">Последнее сообщение</string>
+    <string name="profile_pic_upload_fail">Ошибка загрузки</string>
+    <string name="sign_out_button">Выйти из аккаунта</string>
+    <string name="username_label">Имя</string>
+    <string name="username_description">Это имя будет видеть все пользователи VortexChat</string>
+    <string name="email_label">Почта</string>
+
+    <string name="dialog_input_field_hint">Введите сообщение…</string>
+    <string name="send_button_content_description">Отправить</string>
+
+    <string name="last_message_placeholder">Привет! Я пользуюсь VortexChat</string>
+</resources>

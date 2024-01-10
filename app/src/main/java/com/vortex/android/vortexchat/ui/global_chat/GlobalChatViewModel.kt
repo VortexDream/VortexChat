@@ -23,7 +23,7 @@ class GlobalChatViewModel @Inject constructor(
     private val repository: BaseAuthRepository
 ) : ViewModel() {
 
-    private val TAG = "ChatsViewModel"
+    private val TAG = "GlobalChatViewModel"
 
     private val _firebaseUser = MutableStateFlow<FirebaseUser?>(null)
     val currentUser : StateFlow<FirebaseUser?>

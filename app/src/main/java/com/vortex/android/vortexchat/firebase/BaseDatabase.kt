@@ -13,4 +13,10 @@ interface BaseDatabase {
 
     suspend fun sendMessageToGlobalChat(message: Message)
 
+    suspend fun sendMessageToDialog(message: Message, otherUserId: String)
+
+    suspend fun getAllDialogMessages(otherUserId: String)
+
+    suspend fun getLastDialogMessages()
+
 }

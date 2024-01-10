@@ -1,6 +1,7 @@
 package com.vortex.android.vortexchat.ui.chats
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,10 +12,14 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.firebase.storage.FirebaseStorage
 import com.vortex.android.vortexchat.activities.MainActivity
 import com.vortex.android.vortexchat.databinding.FragmentChatsBinding
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class ChatsFragment : Fragment() {
@@ -27,6 +32,9 @@ class ChatsFragment : Fragment() {
 
     private val chatsViewModel: ChatsViewModel by viewModels()
     private val TAG = "ChatsFragment"
+
+    @Inject
+    lateinit var storage: FirebaseStorage
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -50,11 +58,20 @@ class ChatsFragment : Fragment() {
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                chatsViewModel.userList.collect { users ->
-                    binding.chatsRecyclerView.adapter = ChatListAdapter(users, requireContext()) { userId ->
-                        findNavController().navigate(ChatsFragmentDirections.chatlistToDialog())
+                val combinedFlow = combine(
+                    chatsViewModel.userList,
+                    chatsViewModel.lastDialogMessageList
+                ) { users, lastMessages ->
+                    Log.d(TAG, "Last Messages: $lastMessages")
+                    binding.chatsRecyclerView.adapter = ChatListAdapter(
+                        users,
+                        lastMessages,
+                        chatsViewModel.currentUser.value!!.uid,
+                        requireContext(),
+                        storage) { userId, displayName ->
+                        findNavController().navigate(ChatsFragmentDirections.chatlistToDialog(userId, displayName))
                     }
-                }
+                }.collect()
             }
         }
     }

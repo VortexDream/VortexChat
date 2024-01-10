@@ -40,14 +40,11 @@ class MainActivity : AppCompatActivity() {
         bottomNavigationView.setupWithNavController(navController)
     }
 
-    fun showBottomNavigation()
-    {
+    fun showBottomNavigation() {
         binding.navView.visibility = View.VISIBLE
-        //(activity as MainActivity).hideBottomNavigation() внутри фрагмента
     }
 
-    fun hideBottomNavigation()
-    {
+    fun hideBottomNavigation() {
         binding.navView.visibility = View.GONE
     }
 

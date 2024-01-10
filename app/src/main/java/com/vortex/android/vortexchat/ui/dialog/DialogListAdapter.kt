@@ -1,12 +1,10 @@
-package com.vortex.android.vortexchat.ui.global_chat
+package com.vortex.android.vortexchat.ui.dialog
 
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.content.res.AppCompatResources
-import androidx.core.view.isInvisible
-import androidx.core.view.updatePadding
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
 import com.bumptech.glide.load.engine.DiskCacheStrategy
@@ -22,7 +20,7 @@ import com.vortex.android.vortexchat.util.getTimeFromMilliseconds
 const val LEFT_ITEM = 0
 const val RIGHT_ITEM = 1
 
-class GlobalChatHolder(
+class DialogHolder(
     private val binding: ViewBinding,
     private val context: Context,
     private val storage: FirebaseStorage
@@ -50,7 +48,8 @@ class GlobalChatHolder(
                     binding.dateDelimeter.visibility = View.VISIBLE
                     //Проверка на то, что у соседних сообщений отличаются даты
                 } else if (getDateFromMilliseconds(message.timestamp.toString().toLong(), context) !=
-                    getDateFromMilliseconds(messages[position - 1].timestamp.toString().toLong(), context)) {
+                    getDateFromMilliseconds(messages[position - 1].timestamp.toString().toLong(), context)
+                ) {
 
                     binding.dateDelimeter.text = getDateFromMilliseconds(
                         message.timestamp.toString().toLong(),
@@ -96,7 +95,8 @@ class GlobalChatHolder(
                     binding.dateDelimeter.visibility = View.VISIBLE
                     //Проверка на то, что у соседних сообщений отличаются даты
                 } else if (getDateFromMilliseconds(message.timestamp.toString().toLong(), context) !=
-                    getDateFromMilliseconds(messages[position - 1].timestamp.toString().toLong(), context)) {
+                    getDateFromMilliseconds(messages[position - 1].timestamp.toString().toLong(), context)
+                ) {
 
                     binding.dateDelimeter.text = getDateFromMilliseconds(
                         message.timestamp.toString().toLong(),
@@ -110,21 +110,21 @@ class GlobalChatHolder(
     }
 }
 
-class GlobalChatListAdapter(
+class DialogListAdapter(
     private val messages: List<Message>,
     private val context: Context,
     private val currentUserId: String?,
     private val storage: FirebaseStorage
-) : RecyclerView.Adapter<GlobalChatHolder>() {
+) : RecyclerView.Adapter<DialogHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GlobalChatHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DialogHolder {
         val inflater = LayoutInflater.from(parent.context)
         val binding: ViewBinding = when (viewType) {
             LEFT_ITEM -> ListItemDialogLeftBinding.inflate(inflater, parent, false)
             RIGHT_ITEM -> ListItemDialogRightBinding.inflate(inflater, parent, false)
             else -> throw IllegalArgumentException("Invalid view type")
         }
-        return GlobalChatHolder(binding, context, storage)
+        return DialogHolder(binding, context, storage)
     }
 
     override fun getItemViewType(position: Int): Int {
@@ -133,7 +133,7 @@ class GlobalChatListAdapter(
 
     override fun getItemCount() = messages.size
 
-    override fun onBindViewHolder(holder: GlobalChatHolder, position: Int) {
+    override fun onBindViewHolder(holder: DialogHolder, position: Int) {
         val message = messages[position]
         holder.bind(message, messages, position)
     }

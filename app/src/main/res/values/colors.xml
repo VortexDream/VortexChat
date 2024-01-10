@@ -9,7 +9,7 @@
     <color name="white">#FFFFFFFF</color>
     <color name="yellow">#fcf403</color>
     <color name="transparent_yellow">#80fcf403</color>
-    <color name="dim_yellow">#e6dc1c</color>
+    <color name="dim_yellow">#CCFFEB3B</color>
     <color name="transparent">#00ffffff</color>
 
 
@@ -27,4 +27,6 @@
     <color name="settingsIconColor">#0E8374</color>
     <color name="grayBackground">#BCBCBC</color>
     <color name="chatbackground">#009688</color>
+    <color name="colorPrimaryBackground">#FF262451</color>
+    <color name="yellowVariant">#C0B60A</color>
 </resources>

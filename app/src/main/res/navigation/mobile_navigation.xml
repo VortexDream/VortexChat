@@ -106,5 +106,12 @@
         android:id="@+id/dialogFragment"
         android:name="com.vortex.android.vortexchat.ui.dialog.DialogFragment"
         android:label="fragment_dialog"
-        tools:layout="@layout/fragment_dialog" />
+        tools:layout="@layout/fragment_dialog" >
+        <argument
+            android:name="userId"
+            app:argType="string" />
+        <argument
+            android:name="displayName"
+            app:argType="string" />
+    </fragment>
 </navigation>

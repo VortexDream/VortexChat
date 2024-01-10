@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Vortex Chat</string>
+    <string name="app_name">VortexChat</string>
     <string name="title_home">Chats</string>
     <string name="title_global_chat">Global Chat</string>
     <string name="title_profile">Profile</string>
@@ -40,12 +40,17 @@
     <string name="reset_password_button_send_email">Reset password</string>
 
     <string name="profile_photo_no_image_description">Profile picture (not set)</string>
-    <string name="profile_photo_image_description">Profile picture (set)</string>
+    <string name="profile_photo_image_description">Profile picture</string>
     <string name="chat_list_display_name">Username</string>
     <string name="chat_list_last_message">Last message</string>
-
+    <string name="profile_pic_upload_fail">Upload error</string>
     <string name="sign_out_button">Sign Out</string>
+    <string name="username_label">Username</string>
+    <string name="username_description">This name will be seen by all VortexChat users</string>
+    <string name="email_label">Email</string>
 
     <string name="dialog_input_field_hint">Enter your message…</string>
     <string name="send_button_content_description">Send</string>
+
+    <string name="last_message_placeholder">Hello! I\'m using VortexChat</string>
 </resources>
