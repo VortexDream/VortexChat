@@ -1,8 +1,10 @@
 package com.vortex.android.vortexchat.activities
 
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.navigateUp
@@ -22,7 +24,11 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        supportActionBar?.hide()
+        supportActionBar?.apply {
+            hide()
+            setBackgroundDrawable(ColorDrawable(ContextCompat.getColor(themedContext, R.color.colorPrimaryVariant2)))
+        }
+        window.navigationBarColor = ContextCompat.getColor(baseContext, R.color.colorPrimaryVariant2)
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)

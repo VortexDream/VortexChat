@@ -1,6 +1,7 @@
 package com.vortex.android.vortexchat.ui.login.sign_in
 
 import android.content.Context
+import android.graphics.PorterDuff
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -8,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import androidx.core.content.ContextCompat
 import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
@@ -96,22 +98,34 @@ class SignInFragment : Fragment() {
                     is LoginViewModel.AllEvents.Error -> {
                         binding.progressBar.isInvisible = true
                         Snackbar.make(binding.root, getString(event.errorRes), Snackbar.LENGTH_SHORT)
+                            .setBackgroundTintMode(PorterDuff.Mode.SRC_OVER)
+                            .setBackgroundTint(ContextCompat.getColor(requireContext(), R.color.colorPrimaryVariant))
+                            .setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
                             .show()
                     }
                     is LoginViewModel.AllEvents.Message -> {
                         Snackbar.make(binding.root, getString(event.messageRes), Snackbar.LENGTH_SHORT)
+                            .setBackgroundTintMode(PorterDuff.Mode.SRC_OVER)
+                            .setBackgroundTint(ContextCompat.getColor(requireContext(), R.color.colorPrimaryVariant))
+                            .setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
                             .show()
                     }
                     is LoginViewModel.AllEvents.ErrorCode -> {
                         if (event.code == 1) {
                             binding.progressBar.isInvisible = true
                             Snackbar.make(binding.root, getString(R.string.error_empty_email), Snackbar.LENGTH_SHORT)
+                                .setBackgroundTintMode(PorterDuff.Mode.SRC_OVER)
+                                .setBackgroundTint(ContextCompat.getColor(requireContext(), R.color.colorPrimaryVariant))
+                                .setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
                                 .show()
                         }
 
                         if (event.code == 2) {
                             binding.progressBar.isInvisible = true
                             Snackbar.make(binding.root, getString(R.string.error_empty_password), Snackbar.LENGTH_SHORT)
+                                .setBackgroundTintMode(PorterDuff.Mode.SRC_OVER)
+                                .setBackgroundTint(ContextCompat.getColor(requireContext(), R.color.colorPrimaryVariant))
+                                .setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
                                 .show()
                         }
                     }
@@ -119,13 +133,6 @@ class SignInFragment : Fragment() {
             }
         }
     }
-
-    //Закомментировано из-за мерцания
-    /*override fun onStop() {
-        super.onStop()
-        (activity as MainActivity).showBottomNavigation()
-        (activity as MainActivity).supportActionBar?.show()
-    }*/
 
     override fun onDestroy() {
         super.onDestroy()

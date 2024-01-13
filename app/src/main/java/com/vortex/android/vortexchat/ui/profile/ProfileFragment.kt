@@ -14,11 +14,12 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
 import com.vortex.android.vortexchat.GlideApp
 import com.vortex.android.vortexchat.R
 import com.vortex.android.vortexchat.activities.MainActivity
 import com.vortex.android.vortexchat.databinding.FragmentProfileBinding
-import com.vortex.android.vortexchat.firebase.OnlineStorage
 import com.vortex.android.vortexchat.repository.GlideImpl
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -36,7 +37,9 @@ class ProfileFragment : Fragment() {
     private val profileViewModel: ProfileViewModel by viewModels()
 
     @Inject
-    lateinit var storage: OnlineStorage
+    lateinit var storage: FirebaseStorage
+
+    private lateinit var storageRef: StorageReference
 
     //Контракт на выбор картинки для профиля
     private val pickMedia = registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
@@ -71,6 +74,7 @@ class ProfileFragment : Fragment() {
 
         profileViewModel.getCurrentUser()
         registerObservers()
+        storageRef = storage.reference
         updatePhoto()
         binding.apply {
             signOutButton.setOnClickListener {
@@ -87,7 +91,7 @@ class ProfileFragment : Fragment() {
 
     private fun updatePhoto() {
         GlideApp.with(requireContext())
-            .load(storage.profilePicRef)
+            .load(storageRef.child("ProfilePics/${profileViewModel.currentUser.value!!.uid}"))
             .listener(GlideImpl.OnCompleted {
                 binding.profileFragment.contentDescription = getString(R.string.profile_photo_image_description)
                 binding.profilePhotoCamera.visibility = View.GONE

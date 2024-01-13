@@ -70,7 +70,6 @@ class ChatsFragment : Fragment() {
                     chatsViewModel.userList,
                     chatsViewModel.lastDialogMessageList
                 ) { users, lastMessages ->
-                    Log.d(TAG, "Last Messages: $lastMessages")
                     binding.chatsRecyclerView.adapter = ChatListAdapter(
                         users,
                         lastMessages,
@@ -93,6 +92,7 @@ class ChatsFragment : Fragment() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 chatsViewModel.currentUser.collect { user ->
+                    Log.d(TAG,user.toString())
                     if (user == null) {
                         findNavController().navigate(ChatsFragmentDirections.chatsToLogin())
                     }

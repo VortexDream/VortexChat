@@ -7,15 +7,16 @@ import com.vortex.android.vortexchat.repository.BaseAuthRepository
 import javax.inject.Inject
 
 class OnlineStorage @Inject constructor(
-    private val storage: FirebaseStorage,
+    storage: FirebaseStorage,
     private val repository: BaseAuthRepository
 ) : BaseStorage {
 
-    private val currentUserId = repository.getCurrentUser()!!.uid
-    val profilePicRef = storage.reference.child("ProfilePics/${currentUserId}")
+    private val storageRef = storage.reference
 
     override suspend fun uploadProfilePic(uri: Uri, toastCallback: () -> Unit, imageViewCallback: () -> Unit) {
 
+        val currentUserId = repository.getCurrentUser()!!.uid
+        val profilePicRef = storageRef.child("ProfilePics/${currentUserId}")
         val uploadTask = profilePicRef.putFile(uri)
 
         uploadTask.addOnFailureListener {

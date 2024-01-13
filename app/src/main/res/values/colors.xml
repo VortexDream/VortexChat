@@ -16,6 +16,7 @@
 
     <color name="colorPrimary">#350e59</color>
     <color name="colorPrimaryVariant">#250633</color>
+    <color name="colorPrimaryVariant2">#320C43</color>
     <color name="colorPrimaryDark">#000000</color>
     <color name="colorAccent">#03DAC5</color>
     <color name="lightGrey">#EDEDED</color>

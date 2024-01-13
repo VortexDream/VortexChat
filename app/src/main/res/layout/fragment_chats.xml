@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/chats_fragment"
+    android:background="@color/colorPrimaryVariant"
     tools:context=".ui.chats.ChatsFragment">
 
     <androidx.recyclerview.widget.RecyclerView

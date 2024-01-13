@@ -1,12 +1,14 @@
 package com.vortex.android.vortexchat.ui.login.reset_password
 
 import android.content.Context
+import android.graphics.PorterDuff
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import androidx.core.content.ContextCompat
 import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
@@ -29,7 +31,6 @@ class ResetPasswordFragment : Fragment() {
             "Cannot access binding because it is null. Is the view visible?"
         }
     private val loginViewModel : LoginViewModel by activityViewModels()
-    private val TAG = "ResetPasswordFragment"
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -71,18 +72,27 @@ class ResetPasswordFragment : Fragment() {
                 when(event){
                     is LoginViewModel.AllEvents.Message -> {
                         Snackbar.make(binding.root, getString(event.messageRes), Snackbar.LENGTH_SHORT)
+                            .setBackgroundTintMode(PorterDuff.Mode.SRC_OVER)
+                            .setBackgroundTint(ContextCompat.getColor(requireContext(), R.color.colorPrimaryVariant))
+                            .setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
                             .show()
                         findNavController().popBackStack()
                     }
                     is LoginViewModel.AllEvents.Error -> {
                         binding.progressBar.isInvisible = true
                         Snackbar.make(binding.root, getString(event.errorRes), Snackbar.LENGTH_SHORT)
+                            .setBackgroundTintMode(PorterDuff.Mode.SRC_OVER)
+                            .setBackgroundTint(ContextCompat.getColor(requireContext(), R.color.colorPrimaryVariant))
+                            .setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
                             .show()
                     }
                     is LoginViewModel.AllEvents.ErrorCode -> {
                         if (event.code == 1) {
                             binding.progressBar.isInvisible = true
                             Snackbar.make(binding.root, getString(R.string.error_empty_email), Snackbar.LENGTH_SHORT)
+                                .setBackgroundTintMode(PorterDuff.Mode.SRC_OVER)
+                                .setBackgroundTint(ContextCompat.getColor(requireContext(), R.color.colorPrimaryVariant))
+                                .setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
                                 .show()
                         }
                     }
