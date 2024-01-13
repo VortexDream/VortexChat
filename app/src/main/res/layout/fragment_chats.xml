@@ -11,5 +11,15 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/chats_recycler_view"
-        tools:listitem="@layout/list_item_chat"/>
+        tools:listitem="@layout/list_item_chat"
+        android:layout_marginBottom="56dp"/>
+
+    <View
+        android:id="@+id/divider_bottom"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="@color/yellowVariant"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="56dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>

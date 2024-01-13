@@ -1,7 +1,6 @@
 package com.vortex.android.vortexchat.ui.profile
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -28,7 +27,6 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class ProfileFragment : Fragment() {
 
-    private val TAG = "ProfileFragment"
     private var _binding: FragmentProfileBinding? = null
     private val binding
         get() = checkNotNull(_binding) {
@@ -105,7 +103,6 @@ class ProfileFragment : Fragment() {
         _binding = null
     }
 
-    //Переход в другую активность при успешной регистрации
     private fun registerObservers() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {

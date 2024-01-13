@@ -53,4 +53,6 @@
     <string name="send_button_content_description">Send</string>
 
     <string name="last_message_placeholder">Hello! I\'m using VortexChat</string>
+
+    <string name="message_hint">Message</string>
 </resources>

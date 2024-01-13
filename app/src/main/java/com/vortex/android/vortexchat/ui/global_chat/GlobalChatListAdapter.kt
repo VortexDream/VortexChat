@@ -1,12 +1,11 @@
 package com.vortex.android.vortexchat.ui.global_chat
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.content.res.AppCompatResources
-import androidx.core.view.isInvisible
-import androidx.core.view.updatePadding
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
 import com.bumptech.glide.load.engine.DiskCacheStrategy
@@ -33,6 +32,7 @@ class GlobalChatHolder(
 
         when(binding) {
             is ListItemDialogLeftBinding -> {
+                binding.dateDelimeter.visibility = View.GONE
                 binding.chatEntry.messageText.text = message.text
                 binding.chatEntry.date.text = getTimeFromMilliseconds(
                     message.timestamp.toString().toLong(),
@@ -43,6 +43,8 @@ class GlobalChatHolder(
                     AppCompatResources.getDrawable(context, R.drawable.view_chat_message_background_left)
                 //Логика отображение делиметров даты
                 if (position == 0) {
+
+                    Log.d("ADAPTER", "${getDateFromMilliseconds(message.timestamp.toString().toLong(), context)}, $position, LEFT")
                     binding.dateDelimeter.text = getDateFromMilliseconds(
                         message.timestamp.toString().toLong(),
                         context
@@ -52,6 +54,7 @@ class GlobalChatHolder(
                 } else if (getDateFromMilliseconds(message.timestamp.toString().toLong(), context) !=
                     getDateFromMilliseconds(messages[position - 1].timestamp.toString().toLong(), context)) {
 
+                    Log.d("ADAPTER", "${getDateFromMilliseconds(message.timestamp.toString().toLong(), context)}, $position, LEFT")
                     binding.dateDelimeter.text = getDateFromMilliseconds(
                         message.timestamp.toString().toLong(),
                         context
@@ -79,6 +82,7 @@ class GlobalChatHolder(
                 }
             }
             is ListItemDialogRightBinding -> {
+                binding.dateDelimeter.visibility = View.GONE
                 binding.chatEntry.messageText.text = message.text
                 binding.chatEntry.date.text = getTimeFromMilliseconds(
                     message.timestamp.toString().toLong(),
@@ -89,6 +93,8 @@ class GlobalChatHolder(
                     AppCompatResources.getDrawable(context, R.drawable.view_chat_message_background_right)
                 //Логика отображение делиметров даты
                 if (position == 0) {
+
+                    Log.d("ADAPTER", "${getDateFromMilliseconds(message.timestamp.toString().toLong(), context)}, $position, RIGHT")
                     binding.dateDelimeter.text = getDateFromMilliseconds(
                         message.timestamp.toString().toLong(),
                         context
@@ -98,11 +104,12 @@ class GlobalChatHolder(
                 } else if (getDateFromMilliseconds(message.timestamp.toString().toLong(), context) !=
                     getDateFromMilliseconds(messages[position - 1].timestamp.toString().toLong(), context)) {
 
+                    Log.d("ADAPTER", "${getDateFromMilliseconds(message.timestamp.toString().toLong(), context)}, $position, RIGHT")
+                    binding.dateDelimeter.visibility = View.VISIBLE
                     binding.dateDelimeter.text = getDateFromMilliseconds(
                         message.timestamp.toString().toLong(),
                         context
                     )
-                    binding.dateDelimeter.visibility = View.VISIBLE
 
                 }
             }

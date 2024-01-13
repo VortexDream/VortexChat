@@ -11,6 +11,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.storage.FirebaseStorage
 import com.vortex.android.vortexchat.activities.MainActivity
@@ -20,6 +21,7 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+
 
 @AndroidEntryPoint
 class ChatsFragment : Fragment() {
@@ -46,6 +48,12 @@ class ChatsFragment : Fragment() {
         (activity as MainActivity).supportActionBar?.show()
         _binding = FragmentChatsBinding.inflate(layoutInflater, container,false)
         binding.chatsRecyclerView.layoutManager = LinearLayoutManager(context)
+        binding.chatsRecyclerView.addItemDecoration(
+            DividerItemDecoration(
+                context,
+                DividerItemDecoration.VERTICAL
+            )
+        )
 
         return binding.root
     }
@@ -58,7 +66,7 @@ class ChatsFragment : Fragment() {
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                val combinedFlow = combine(
+                combine(
                     chatsViewModel.userList,
                     chatsViewModel.lastDialogMessageList
                 ) { users, lastMessages ->

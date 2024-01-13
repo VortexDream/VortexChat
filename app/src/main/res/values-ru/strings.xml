@@ -7,7 +7,7 @@
     <string name="hint_username">Имя</string>
     <string name="hint_email">Почта</string>
     <string name="hint_password">Пароль</string>
-    <string name="sign_up_button_text">Зарегистрироваться</string>
+    <string name="sign_up_button_text">Регистрация</string>
     <string name="logo_content_description">Это иконка приложения</string>
     <string name="have_account_text_view">Уже есть аккаунт?</string>
     <!--Sign In-->
@@ -53,4 +53,5 @@
     <string name="send_button_content_description">Отправить</string>
 
     <string name="last_message_placeholder">Привет! Я пользуюсь VortexChat</string>
+    <string name="message_hint">Сообщение</string>
 </resources>

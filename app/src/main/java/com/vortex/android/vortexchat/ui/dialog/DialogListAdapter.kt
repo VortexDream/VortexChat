@@ -31,6 +31,7 @@ class DialogHolder(
 
         when(binding) {
             is ListItemDialogLeftBinding -> {
+                binding.dateDelimeter.visibility = View.GONE
                 binding.chatEntry.messageText.text = message.text
                 binding.chatEntry.date.text = getTimeFromMilliseconds(
                     message.timestamp.toString().toLong(),
@@ -78,6 +79,7 @@ class DialogHolder(
                 }
             }
             is ListItemDialogRightBinding -> {
+                binding.dateDelimeter.visibility = View.GONE
                 binding.chatEntry.messageText.text = message.text
                 binding.chatEntry.date.text = getTimeFromMilliseconds(
                     message.timestamp.toString().toLong(),

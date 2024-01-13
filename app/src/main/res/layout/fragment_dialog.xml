@@ -12,22 +12,25 @@
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginBottom="4dp"
         app:layout_constraintBottom_toTopOf="@id/messageTextField"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:id="@+id/dialog_recycler_view"
-        tools:listitem="@layout/list_item_chat"/>
+        tools:listitem="@layout/list_item_dialog_right"/>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/messageTextField"
         android:layout_width="0dp"
         android:layout_height="40dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="4dp"
         android:layout_marginStart="8dp"
+        android:layout_marginEnd="4dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/send_button"
         app:layout_constraintStart_toStartOf="parent"
+
         android:hint="@string/dialog_input_field_hint"
         app:hintEnabled="false">
 
@@ -36,19 +39,27 @@
             android:layout_height="40dp"
             android:paddingTop="4dp"
             android:paddingBottom="4dp"
-            android:textColor="@color/white"/>
+            android:hint="@string/message_hint"
+            android:textColorHint="@color/dim_white"
+            android:background="@color/colorPrimary" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
-    <ImageButton
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/send_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:backgroundTint="@color/colorPrimary"
-        android:src="@drawable/ic_send"
+        android:layout_width="52dp"
+        android:layout_height="52dp"
+        android:layout_marginStart="4dp"
         app:cornerRadius="8dp"
+        app:strokeWidth="2dp"
+        app:strokeColor="@color/dim_yellow"
+        android:backgroundTint="@color/colorPrimaryVariant"
+        app:icon="@drawable/ic_send"
+        app:iconGravity="textStart"
+        app:iconPadding="0dp"
+        app:iconTint="@color/dim_yellow"
         app:layout_constraintBottom_toBottomOf="@+id/messageTextField"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dialog_recycler_view"
+        app:layout_constraintTop_toTopOf="@+id/messageTextField"
         android:contentDescription="@string/send_button_content_description" />
 </androidx.constraintlayout.widget.ConstraintLayout>

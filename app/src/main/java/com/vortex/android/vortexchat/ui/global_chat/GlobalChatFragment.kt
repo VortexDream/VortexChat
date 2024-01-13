@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.storage.FirebaseStorage
 import com.vortex.android.vortexchat.activities.MainActivity
 import com.vortex.android.vortexchat.databinding.FragmentGlobalChatBinding
-import com.vortex.android.vortexchat.ui.chats.ChatsFragmentDirections
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -29,7 +28,6 @@ class GlobalChatFragment : Fragment() {
         }
 
     private val globalChatViewModel: GlobalChatViewModel by viewModels()
-    private val TAG = "GlobalChatFragment"
 
     @Inject
     lateinit var storage: FirebaseStorage
@@ -54,6 +52,7 @@ class GlobalChatFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         globalChatViewModel.getCurrentUser()
+        registerObservers()
         binding.apply {
             sendButton.setOnClickListener {
                 val messageField = binding.messageTextField.editText
@@ -83,4 +82,15 @@ class GlobalChatFragment : Fragment() {
         _binding = null
     }
 
+    private fun registerObservers() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                globalChatViewModel.currentUser.collect { user ->
+                    if (user == null) {
+                        findNavController().navigate(GlobalChatFragmentDirections.globalChatToLogin())
+                    }
+                }
+            }
+        }
+    }
 }

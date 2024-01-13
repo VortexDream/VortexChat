@@ -107,6 +107,7 @@
         android:layout_marginEnd="8dp"
         android:text="@string/username_description"
         android:textSize="12sp"
+        android:textColor="@color/dim_white"
         android:textAppearance="?attr/textAppearanceBody1"
         app:layout_constraintStart_toEndOf="@id/guideline"
         app:layout_constraintTop_toBottomOf="@id/username" />
@@ -160,4 +161,13 @@
         android:textAppearance="?attr/textAppearanceHeadline6"
         app:layout_constraintStart_toEndOf="@id/guideline"
         app:layout_constraintTop_toBottomOf="@+id/email_label" />
+
+    <View
+        android:id="@+id/divider_bottom"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="@color/yellowVariant"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="56dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>
