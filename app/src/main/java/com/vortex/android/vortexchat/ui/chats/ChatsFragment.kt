@@ -100,4 +100,17 @@ class ChatsFragment : Fragment() {
             }
         }
     }
+
+    //private fun doSomething() {
+    //        viewLifecycleOwner.lifecycleScope.launch {
+    //            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+    //                chatsViewModel.currentUser.collect { user ->
+    //                    Log.d(TAG,user.toString())
+    //                    if (user == null) {
+    //                        findNavController().navigate(ChatsFragmentDirections.chatsToLogin())
+    //                    }
+    //                }
+    //            }
+    //        }
+    //    }
 }

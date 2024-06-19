@@ -7,8 +7,7 @@
     android:layout_height="match_parent"
     android:id="@+id/dialog_fragment"
     tools:context=".ui.dialog.DialogFragment"
-    android:background="@color/colorPrimaryVariant"
-    android:layout_marginBottom="10dp">
+    android:background="@color/colorPrimaryVariant">
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
@@ -25,7 +24,7 @@
         android:id="@+id/messageTextField"
         android:layout_width="0dp"
         android:layout_height="40dp"
-        android:layout_marginBottom="4dp"
+        android:layout_marginBottom="12dp"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="4dp"
         app:layout_constraintBottom_toBottomOf="parent"
